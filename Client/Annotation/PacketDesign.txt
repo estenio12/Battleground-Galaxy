@@ -35,9 +35,13 @@
     CMD PID   BONUS
     5   1 - 4 0 - 1
 
-    // # ACTIVE BONUS
+    // # ACTIVE GUN
     CMD PID   BONUS
     6   1 - 4 0 - 1
+
+    // # KILL NOTIFIER
+    CMD PIDKILLER PIDDEAD 
+    7   1 - 4     1-4
 
 # Arguments
 

@@ -134,6 +134,28 @@ char Map::GetMyPID()
 
 void Map::NetPacketProcess(std::string NetPacket)
 {
+    if(NetPacket.at(0) == NETCODE_CMD::KILLNOTIFIER)
+    {
+        // TO DO
+    }
 
+    // # Check if the input to MyPlayer
+    if(NetPacket.at(1) == MyPlayer->PID)
+    {
+        auto Buffer = std::make_shared<std::string>(NetPacket);
+        MyPlayer->NetInputProcess(Buffer);
+    }
+    else
+    {
+        // # Check if the input it to the outher players
+        for(auto player : PlayerList)
+        {
+            if(player->PID == NetPacket.at(1))
+            {
+                auto Buffer = std::make_shared<std::string>(NetPacket);
+                player->NetInputProcess(Buffer);
+            }
+        }
+    }
 }
 

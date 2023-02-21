@@ -40,6 +40,7 @@ namespace NETCODE_CMD
     static const char REBORN       = '4';
     static const char BONUS        = '5';
     static const char GUN          = '6';
+    static const char KILLNOTIFIER = '7';
 }
 
 namespace GUN
