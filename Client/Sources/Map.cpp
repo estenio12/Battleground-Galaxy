@@ -1,7 +1,7 @@
 #include "../Includes/Map.hpp"
 
 Map::Map(RetArgPro* Argument,
-                           sf::Texture Texture):Texture(Texture)
+         sf::Texture Texture):Texture(Texture)
 {
     this->MyPlayer   = Argument->MyPlayer;
     this->PlayerList = Argument->PlayerList;
