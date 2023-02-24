@@ -13,13 +13,11 @@
 
 class Object2D
 {
-    private:
-        sf::FloatRect BoundingBox;
-
     public:
         sf::Vector2f Location;
         sf::Vector2f Size;
         uint8_t CollisionType = CollisionChannel::NO_COLLISION;
+        sf::FloatRect BoundingBox;
 
     public:
         virtual void Update() = 0;
