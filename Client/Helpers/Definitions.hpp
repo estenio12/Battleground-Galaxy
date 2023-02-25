@@ -24,11 +24,15 @@ namespace BULLET
 
 namespace INPUT
 {
-    static const char NONE  = '0';
-    static const char UP    = '1';
-    static const char LEFT  = '2';
-    static const char DOWN  = '3';
-    static const char RIGHT = '4';
+    static const char NONE      = '0';
+    static const char UP        = '1';
+    static const char LEFT      = '2';
+    static const char DOWN      = '3';
+    static const char RIGHT     = '4';
+    static const char UPRIGHT   = '5';
+    static const char UPLEFT    = '6';
+    static const char DOWNRIGHT = '7';
+    static const char DOWNLEFT  = '8';
 }
 
 namespace NETCODE_CMD

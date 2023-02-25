@@ -16,9 +16,8 @@
 class NetworkJob
 {
     private:
-        const int SERVER_PORT = 46355;
-        const std::string IP_SERVER = "192.168.100.6";
         sf::UdpSocket Socket;
+        unsigned short SERVERPORT = 46355;
 
     private:
         char Buffer[1024];
@@ -34,10 +33,8 @@ class NetworkJob
         ~NetworkJob();
 
     public:
-        void SendInput(char Input, char Fire);
-        void SendDisconnect();
+        void SendInputToAllPlayer(std::string );
+        void SendInputSinglePlayer(std::string );
         void ReceiveData();
-        void MakeShot();
         bool MatchRun();
-        bool CanShot();
 };

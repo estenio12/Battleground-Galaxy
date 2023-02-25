@@ -85,6 +85,9 @@ void Bullet::LoadQuantumBubble()
 
 void Bullet::BulletMoviment()
 {
+    Velocity.x = 0.f;
+    Velocity.y = 0.f;
+
     switch (Direction)
     {
         case INPUT::RIGHT:
@@ -96,9 +99,15 @@ void Bullet::BulletMoviment()
             Velocity.x = -movespeed;
             Velocity.y = 0.f;
         break;
+
+        case INPUT::DOWN:
+            Velocity.x = 0.f;
+            Velocity.y = movespeed;
+        break;
     }
 
     this->Location += Velocity;
+    this->Sprite.setPosition(Location);
 }
 
 void Bullet::SetDeactive()

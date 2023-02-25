@@ -8,6 +8,9 @@
 #include "../Includes/ArgumentProcess.hpp"
 #include "../Includes/DisplayInfo.hpp"
 #include "../Includes/Map.hpp"
+#include "../Includes/NetworkJob.hpp"
+
+void Listening(NetworkJob* );
 
 int main(int argc, char** argv)
 {
@@ -21,6 +24,11 @@ int main(int argc, char** argv)
     std::string Argument = argv[1];
     auto GetPlayers = ArgumentProcess::Process(Argument);
     Map* map = new Map(GetPlayers);
+    NetworkJob* Job = new NetworkJob(map);
+
+    // # Start thread to listenning player input
+    sf::Thread NetThread(&Listening, Job);
+    NetThread.launch();
     
     // # Load Display
     auto Info = new DisplayInfo();
@@ -32,6 +40,7 @@ int main(int argc, char** argv)
             if(WindowEvent.type == sf::Event::Closed)
             {
                 Window.close();
+                NetThread.terminate();
             }
         }
 
@@ -45,4 +54,12 @@ int main(int argc, char** argv)
     }
 
     return EXIT_SUCCESS;
+}
+
+void Listening(NetworkJob* Job)
+{
+    while(Job->MatchRun())
+    {
+        Job->ReceiveData();
+    }
 }

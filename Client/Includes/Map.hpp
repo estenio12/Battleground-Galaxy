@@ -13,6 +13,7 @@
 #include "../Includes/Player.hpp"
 #include "../Includes/Block.hpp"
 #include "../Includes/ArgumentProcess.hpp"
+#include "../Includes/Timer.hpp"
 
 class Map
 {
@@ -20,6 +21,7 @@ class Map
         sf::Texture Texture;
         std::vector<Player*> PlayerList;
         Player* MyPlayer;
+        Timer* ShotTimer;
 
     private:
         std::vector<BlockCollision*> CollisionList;
@@ -28,6 +30,7 @@ class Map
 
     public:
         bool MatchRun = true;
+        bool CanShot  = true;
 
     public:
         Map(RetArgPro*, sf::Texture);
@@ -38,8 +41,10 @@ class Map
         void Render(sf::RenderWindow* );
         void NetPacketProcess(std::string );
         char GetMyPID();
+        void Shot();
 
     private:
         void LoadBlockCollision();
+        void CanShotHandler();
 };
 

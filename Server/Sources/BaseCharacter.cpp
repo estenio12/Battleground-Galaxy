@@ -2,7 +2,9 @@
 
 void BaseCharacter::Move(char Direction)
 {
-    if(!this->InJump)
+    this->BULLET_DIRECTION = Direction;
+    
+    if(!InJump)
     {
         this->InJump = true;
     }
@@ -11,14 +13,12 @@ void BaseCharacter::Move(char Direction)
     {
         Velocity.x = -(MOVESPEED * DELTATIME);
         Velocity.y = 0;
-        this->BULLET_DIRECTION = INPUT::LEFT;
     }
 
     if(Direction == INPUT::RIGHT)
     {
         Velocity.x = MOVESPEED * DELTATIME;
         Velocity.y = 0;
-        this->BULLET_DIRECTION = INPUT::RIGHT;
     }
 
     if(Direction == INPUT::DOWN)

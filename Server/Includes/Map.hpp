@@ -16,8 +16,9 @@
 
 class Map
 {
-    private:
+    public:
         std::vector<Player*> PlayerList;
+        std::vector<NETPACKET::Packet*> NetList;
 
     private:
         std::vector<BlockCollision*> CollisionList;
@@ -34,6 +35,7 @@ class Map
     public:
         void Update();
         void NetPacketProcess(std::string );
+        void LoadNetList();
 
     private:
         void LoadBlockCollision();

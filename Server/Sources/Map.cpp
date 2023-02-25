@@ -5,6 +5,7 @@ Map::Map(RetArgPro* Argument)
     this->PlayerList = Argument->PlayerList;
     
     LoadBlockCollision();
+    LoadNetList();
 }
 
 Map::~Map()
@@ -82,4 +83,13 @@ void Map::NetPacketProcess(std::string NetPacket)
         }
     }
 }
+
+void Map::LoadNetList()
+{
+    for(auto item : PlayerList)
+    {
+        NetList.push_back(new NETPACKET::Packet(item->IP, item->PORT));
+    }
+}
+
 

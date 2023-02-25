@@ -15,6 +15,22 @@ enum CollisionChannel
     OVERLAP
 };
 
+namespace NETPACKET
+{
+    class Packet
+    {
+        public:
+            std::string IP;
+            unsigned short PORT = 0;
+
+        public:
+            Packet(std::string IP,
+                   unsigned short PORT):
+                   IP(IP), PORT(PORT){}
+            Packet(){}
+    };
+}
+
 namespace BULLET
 {
     static const float BASIC_SIZE[] = {32.f, 32.f};
@@ -29,6 +45,10 @@ namespace INPUT
     static const char LEFT  = '2';
     static const char DOWN  = '3';
     static const char RIGHT = '4';
+    static const char UPRIGHT   = '5';
+    static const char UPLEFT    = '6';
+    static const char DOWNRIGHT = '7';
+    static const char DOWNLEFT  = '8';
 }
 
 namespace NETCODE_CMD

@@ -49,6 +49,7 @@ class Player : public BaseCharacter
         sf::Vector2f CalculateSpawnBullet();
         float CalculateSpawnBulletY();
         float CalculateSpawnBulletX();
+        float CalculateSpawnBulletDown();
 
     public:
         void Update() override;

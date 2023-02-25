@@ -78,6 +78,11 @@ void Bullet::BulletMoviment()
             Velocity.x = -movespeed;
             Velocity.y = 0.f;
         break;
+
+        case INPUT::DOWN:
+            Velocity.x = 0.f;
+            Velocity.y = movespeed;
+        break;
     }
 
     this->Location += Velocity;

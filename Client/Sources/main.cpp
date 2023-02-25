@@ -77,7 +77,7 @@ void Thread_Network(NetworkJob* Job)
         Job->ReceiveData();
 
         // # Stop thread for 1 seconds per cycle
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 
@@ -106,9 +106,10 @@ void InputHandler(NetworkJob* Job)
         Move = INPUT::RIGHT;
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && Job->CanShot())
     {
-        Move = FIRE::FIRE;
+        Fire = FIRE::FIRE;
+        Job->MakeShot();
     }
     
     Job->SendInput(Move, Fire);

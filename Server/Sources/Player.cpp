@@ -63,19 +63,19 @@ void Player::LoadBullet()
 
 void Player::TriggerFire(char State)
 {
+    std::cout << "Debug Index: " << Bullet_Index << std::endl;
     if(FIRE::FIRE == State)
     {
         BulletList[Bullet_Index]->SetActive(CalculateSpawnBullet(),
                                             BULLET_DIRECTION,
                                             GUNHOLD);
+        this->IncrementBulletIndex();
     }
 
     if(FIRE::BONUS == State)
     {
         this->TriggerBonus();
     }
-
-    this->IncrementBulletIndex();
 }
 
 void Player::TriggerBonus()
@@ -94,7 +94,7 @@ void Player::IncrementBulletIndex()
 {
     this->Bullet_Index++;
 
-    if(Bullet_Index > MAX_BULLET)
+    if(Bullet_Index > (MAX_BULLET - 1))
     {
         this->Bullet_Index = 0;
     }
@@ -115,6 +115,11 @@ sf::Vector2f Player::CalculateSpawnBullet()
         case INPUT::LEFT:
             loc.x = (Location.x - CalculateSpawnBulletX()) - SAFE_DISTANCE;
             loc.y = CalculateSpawnBulletY();
+        break;
+
+        case INPUT::DOWN:
+            loc.x = Location.x + ((Size.x / 2) - (CalculateSpawnBulletX() / 2));
+            loc.y = CalculateSpawnBulletDown();
         break;
     }
 
@@ -159,5 +164,27 @@ float Player::CalculateSpawnBulletX()
     }
 
     return BULLET::BASIC_SIZE[0];
+}
+
+float Player::CalculateSpawnBulletDown()
+{
+    float SAFE_DISTANCE = 10.f;
+
+    switch (this->GUNHOLD)
+    {
+        case GUN::BASIC:
+            return (Location.y + Size.y) + (BULLET::BASIC_SIZE[1] + SAFE_DISTANCE);
+        break;
+
+        case GUN::LASER:
+            return (Location.y + Size.y) + (BULLET::LASER_SIZE[1] + SAFE_DISTANCE);
+        break;
+
+        case GUN::QUANTUNBUBBLE:
+            return (Location.y + Size.y) + (BULLET::QUANTUMBUBBLE_SIZE[1] + SAFE_DISTANCE);
+        break;
+    }
+
+    return (Location.y + Size.y + SAFE_DISTANCE);
 }
 

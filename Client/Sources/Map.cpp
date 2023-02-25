@@ -7,6 +7,8 @@ Map::Map(RetArgPro* Argument,
     this->PlayerList = Argument->PlayerList;
     
     LoadBlockCollision();
+
+    this->ShotTimer = new Timer(0.5f);
 }
 
 Map::~Map()
@@ -86,6 +88,9 @@ void Map::Update()
             }
         }
     }
+
+    // # Timers
+    this->CanShotHandler();
 }
 
 void Map::Render(sf::RenderWindow* Render)
@@ -155,6 +160,23 @@ void Map::NetPacketProcess(std::string NetPacket)
                 auto Buffer = std::make_shared<std::string>(NetPacket);
                 player->NetInputProcess(Buffer);
             }
+        }
+    }
+}
+
+void Map::Shot()
+{
+    this->CanShot = false;
+    ShotTimer->ResetTimer();
+}
+
+void Map::CanShotHandler()
+{
+    if(!CanShot)
+    {
+        if(ShotTimer->ExecuteTimer())
+        {
+            this->CanShot = true;
         }
     }
 }

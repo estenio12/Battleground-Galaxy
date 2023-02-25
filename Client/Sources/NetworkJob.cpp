@@ -2,7 +2,7 @@
 
 NetworkJob::NetworkJob(Map* map):map(map)
 {
-    Socket.bind(sf::Socket::AnyPort);
+    Socket.bind(17643);
 }
 
 NetworkJob::~NetworkJob(){}
@@ -43,6 +43,7 @@ void NetworkJob::ReceiveData()
     {
         std::string NewPacket = Buffer;
         map->NetPacketProcess(NewPacket);
+        std::cout << "Debug: " << NewPacket << std::endl;
     }
 }
 
@@ -50,3 +51,13 @@ bool NetworkJob::MatchRun()
 {
     return map->MatchRun;
 }
+bool NetworkJob::CanShot()
+{
+    return map->CanShot;
+}
+
+void NetworkJob::MakeShot()
+{
+    map->Shot();
+}
+
