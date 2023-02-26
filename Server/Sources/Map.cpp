@@ -59,12 +59,12 @@ void Map::LoadBlockCollision()
 {
     BlockCollision* b1 = new BlockCollision(sf::Vector2f(0, 450),
                                             sf::Vector2f(900, 250));
-    BlockCollision* b2 = new BlockCollision(sf::Vector2f(0, 250),
-                                            sf::Vector2f(50, 350));
-    BlockCollision* b3 = new BlockCollision(sf::Vector2f(850, 250),
-                                            sf::Vector2f(50, 350));
-    BlockCollision* b4 = new BlockCollision(sf::Vector2f(100, 130),
-                                            sf::Vector2f(350, 50));
+    BlockCollision* b2 = new BlockCollision(sf::Vector2f(0, 50),
+                                            sf::Vector2f(50, 900));
+    BlockCollision* b3 = new BlockCollision(sf::Vector2f(850, 50),
+                                            sf::Vector2f(50, 900));
+    BlockCollision* b4 = new BlockCollision(sf::Vector2f(0, 0),
+                                            sf::Vector2f(1000, 50));
 
     CollisionList.push_back(b1);
     CollisionList.push_back(b2);

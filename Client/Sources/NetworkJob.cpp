@@ -1,8 +1,9 @@
 #include "../Includes/NetworkJob.hpp"
 
-NetworkJob::NetworkJob(Map* map):map(map)
+NetworkJob::NetworkJob(Map* map, int temp_port):map(map)
 {
-    Socket.bind(17643);
+    Socket.bind(temp_port);
+    std::cout << "Port: " << temp_port << std::endl;
 }
 
 NetworkJob::~NetworkJob(){}
@@ -43,7 +44,7 @@ void NetworkJob::ReceiveData()
     {
         std::string NewPacket = Buffer;
         map->NetPacketProcess(NewPacket);
-        std::cout << "Debug: " << NewPacket << std::endl;
+        // std::cout << "Debug: " << NewPacket << std::endl;
     }
 }
 

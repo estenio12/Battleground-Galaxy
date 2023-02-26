@@ -28,9 +28,10 @@ int main(int argc, char** argv)
     // # Load Actors
     std::string Argument = argv[1];
     RetArgPro* GetPlayerList = ArgumentProcess::Process(Argument, SpriteSheet);
- 
+
+    int TMP_PORT = std::stoi(argv[2]);
     Map* map = new Map(GetPlayerList, SpriteSheet);
-    NetworkJob* Job = new NetworkJob(map);
+    NetworkJob* Job = new NetworkJob(map, TMP_PORT);
 
     // # Instanteate network thread
     sf::Thread NetThread(&Thread_Network, Job);
@@ -52,7 +53,11 @@ int main(int argc, char** argv)
             }
         }
 
-        InputHandler(Job);
+        if(Window.hasFocus())
+        {
+            InputHandler(Job);
+        }
+
         map->Update();
 
         Window.clear();
@@ -86,16 +91,6 @@ void InputHandler(NetworkJob* Job)
     char Fire = FIRE::NONE;
     char Move = INPUT::NONE;
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
-        Move = INPUT::UP;
-    }
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
-        Move = INPUT::DOWN;
-    }
-
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
         Move = INPUT::LEFT;
@@ -104,6 +99,38 @@ void InputHandler(NetworkJob* Job)
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
         Move = INPUT::RIGHT;
+    }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            Move = INPUT::UPLEFT;
+        }
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            Move = INPUT::UPRIGHT;
+        }
+        else
+        {
+            Move = INPUT::UP;
+        }
+    }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            Move = INPUT::DOWNLEFT;
+        }
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            Move = INPUT::DOWNRIGHT;
+        }
+        else
+        {
+            Move = INPUT::DOWN;
+        }
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && Job->CanShot())

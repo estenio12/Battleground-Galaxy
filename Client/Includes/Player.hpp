@@ -7,6 +7,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <cmath>
 #include <memory>
 
 #include "../Helpers/Definitions.hpp"
@@ -35,6 +36,7 @@ class Player : public BaseCharacter
 
     private:
         const int MAX_BULLET = 30;
+        const float SAFE_DISTANCE = 10.f;
         int Bullet_Index = 0;
 
     public:
@@ -46,10 +48,19 @@ class Player : public BaseCharacter
         void JumpAndGravity();
         void LoadBullet();
         void IncrementBulletIndex();
+        float BulletHalfSizeX();
+        float BulletHalfSizeY();
+        float BulletFullSizeX();
+        float BulletFullSizeY();
         sf::Vector2f CalculateSpawnBullet();
-        float CalculateSpawnBulletY();
-        float CalculateSpawnBulletX();
-        float CalculateSpawnBulletDown();
+        sf::Vector2f CalculateSpawnBulletUp();
+        sf::Vector2f CalculateSpawnBulletDown();
+        sf::Vector2f CalculateSpawnBulletLeft();
+        sf::Vector2f CalculateSpawnBulletRight();
+        sf::Vector2f CalculateSpawnBulletUpLeft();
+        sf::Vector2f CalculateSpawnBulletUpRight();
+        sf::Vector2f CalculateSpawnBulletDownLeft();
+        sf::Vector2f CalculateSpawnBulletDownRight();
 
     public:
         void Update() override;

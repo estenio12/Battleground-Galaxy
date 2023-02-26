@@ -30,7 +30,7 @@ class NetworkJob
         Map* map;
 
     public:
-        NetworkJob(Map* );
+        NetworkJob(Map*, int );
         ~NetworkJob();
 
     public:

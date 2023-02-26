@@ -2,37 +2,61 @@
 
 void BaseCharacter::Move(char Direction)
 {
-    this->BULLET_DIRECTION = Direction;
-    
-    if(!InJump)
+    if(Direction == INPUT::UPLEFT)
     {
-        this->InJump = true;
+        Velocity.x = -((MOVESPEED * DELTATIME) / DIAGONAL_FACTOR);
+        Velocity.y = -((MOVESPEED * DELTATIME) / DIAGONAL_FACTOR);
+        this->BULLET_DIRECTION = INPUT::UPLEFT;
+    }
+
+    if(Direction == INPUT::UPRIGHT)
+    {
+        Velocity.x = (MOVESPEED * DELTATIME / DIAGONAL_FACTOR);
+        Velocity.y = -((MOVESPEED * DELTATIME) / DIAGONAL_FACTOR);
+        this->BULLET_DIRECTION = INPUT::UPRIGHT;
+    }
+
+    if(Direction == INPUT::DOWNLEFT)
+    {
+        Velocity.x = -((MOVESPEED * DELTATIME) / DIAGONAL_FACTOR);
+        Velocity.y = (MOVESPEED * DELTATIME / DIAGONAL_FACTOR);
+        this->BULLET_DIRECTION = INPUT::DOWNLEFT;
+    }
+
+    if(Direction == INPUT::DOWNRIGHT)
+    {
+        Velocity.x = (MOVESPEED * DELTATIME / DIAGONAL_FACTOR);
+        Velocity.y = (MOVESPEED * DELTATIME / DIAGONAL_FACTOR);
+        this->BULLET_DIRECTION = INPUT::DOWNRIGHT;
+    }
+
+    if(Direction == INPUT::UP)
+    {
+        Velocity.x = 0;
+        Velocity.y = -(MOVESPEED * DELTATIME);
+        this->BULLET_DIRECTION = INPUT::UP;
     }
 
     if(Direction == INPUT::LEFT)
     {
         Velocity.x = -(MOVESPEED * DELTATIME);
         Velocity.y = 0;
+        this->BULLET_DIRECTION = INPUT::LEFT;
     }
 
     if(Direction == INPUT::RIGHT)
     {
         Velocity.x = MOVESPEED * DELTATIME;
         Velocity.y = 0;
+        this->BULLET_DIRECTION = INPUT::RIGHT;
     }
 
     if(Direction == INPUT::DOWN)
     {
         Velocity.y = MOVESPEED * DELTATIME;
         Velocity.x = 0;
+        this->BULLET_DIRECTION = INPUT::DOWN;
     }
-
-    this->Location += this->Velocity;
-
-    this->UpdateBoundingBox();
-
-    this->Velocity.x = 0;
-    this->Velocity.y = 0;
 }
 
 void BaseCharacter::CollisionResponse(Object2D* Target)
@@ -48,7 +72,6 @@ void BaseCharacter::CollisionResponse(Object2D* Target)
         {
             this->Velocity.y = 0.f;
             this->Location.y = ( Target->Location.y - this->Size.y ) - 3;
-            this->ResetJump();
         }
 
         // # Bottom Response
@@ -84,9 +107,3 @@ void BaseCharacter::CollisionResponse(Object2D* Target)
         this->UpdateBoundingBox();
     }
 }
-
-void BaseCharacter::ResetJump()
-{
-    this->InJump = false;
-}
-

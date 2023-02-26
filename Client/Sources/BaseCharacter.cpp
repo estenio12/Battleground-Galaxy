@@ -2,13 +2,39 @@
 
 void BaseCharacter::Move(char Direction)
 {
-    Velocity.x = 0;
-    Velocity.y = 0;
-
-    if(!InJump)
+    if(Direction == INPUT::UPLEFT)
     {
-        this->InJump = true;
-        this->OnGround = false;
+        Velocity.x = -((MOVESPEED * DELTATIME) / DIAGONAL_FACTOR);
+        Velocity.y = -((MOVESPEED * DELTATIME) / DIAGONAL_FACTOR);
+        this->BULLET_DIRECTION = INPUT::UPLEFT;
+    }
+
+    if(Direction == INPUT::UPRIGHT)
+    {
+        Velocity.x = (MOVESPEED * DELTATIME / DIAGONAL_FACTOR);
+        Velocity.y = -((MOVESPEED * DELTATIME) / DIAGONAL_FACTOR);
+        this->BULLET_DIRECTION = INPUT::UPRIGHT;
+    }
+
+    if(Direction == INPUT::DOWNLEFT)
+    {
+        Velocity.x = -((MOVESPEED * DELTATIME) / DIAGONAL_FACTOR);
+        Velocity.y = (MOVESPEED * DELTATIME / DIAGONAL_FACTOR);
+        this->BULLET_DIRECTION = INPUT::DOWNLEFT;
+    }
+
+    if(Direction == INPUT::DOWNRIGHT)
+    {
+        Velocity.x = (MOVESPEED * DELTATIME / DIAGONAL_FACTOR);
+        Velocity.y = (MOVESPEED * DELTATIME / DIAGONAL_FACTOR);
+        this->BULLET_DIRECTION = INPUT::DOWNRIGHT;
+    }
+
+    if(Direction == INPUT::UP)
+    {
+        Velocity.x = 0;
+        Velocity.y = -(MOVESPEED * DELTATIME);
+        this->BULLET_DIRECTION = INPUT::UP;
     }
 
     if(Direction == INPUT::LEFT)
@@ -31,13 +57,6 @@ void BaseCharacter::Move(char Direction)
         Velocity.x = 0;
         this->BULLET_DIRECTION = INPUT::DOWN;
     }
-
-    this->Location += this->Velocity;
-
-    this->Sprite.setPosition(this->Location);
-
-    this->Velocity.x = 0;
-    this->Velocity.y = 0;
 }
 
 void BaseCharacter::CollisionReponse(Object2D* Target)
@@ -53,7 +72,6 @@ void BaseCharacter::CollisionReponse(Object2D* Target)
         {
             this->Velocity.y = 0.f;
             this->Location.y = ( Target->Location.y - this->Size.y ) - 3;
-            this->ResetJump();
         }
 
         // # Bottom Response
@@ -88,11 +106,4 @@ void BaseCharacter::CollisionReponse(Object2D* Target)
 
         this->Sprite.setPosition(this->Location);
     }
-}
-
-void BaseCharacter::ResetJump()
-{
-    this->JumpCount = 0;
-    this->OnGround  = true;
-    this->InJump = false;
 }

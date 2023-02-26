@@ -4,6 +4,7 @@ Bullet::Bullet(sf::Texture Texture):Texture(Texture)
 {
     this->CollisionType = CollisionChannel::OVERLAP;
     this->Sprite.setTexture(Texture);
+    this->SetDeactive();
 }
 
 Bullet::~Bullet(){}
@@ -104,6 +105,31 @@ void Bullet::BulletMoviment()
             Velocity.x = 0.f;
             Velocity.y = movespeed;
         break;
+
+        case INPUT::UP:
+            Velocity.x = 0.f;
+            Velocity.y = -movespeed;
+        break;
+
+        case INPUT::UPLEFT:
+            Velocity.x = -movespeed;
+            Velocity.y = -movespeed;
+        break;
+
+        case INPUT::UPRIGHT:
+            Velocity.x = movespeed;
+            Velocity.y = -movespeed;
+        break;
+
+        case INPUT::DOWNLEFT:
+            Velocity.x = -movespeed;
+            Velocity.y = movespeed;
+        break;
+
+        case INPUT::DOWNRIGHT:
+            Velocity.x = movespeed;
+            Velocity.y = movespeed;
+        break;
     }
 
     this->Location += Velocity;
@@ -113,4 +139,6 @@ void Bullet::BulletMoviment()
 void Bullet::SetDeactive()
 {
     this->Active = false;
+    this->Location = sf::Vector2f(10000.f, 10000.f);
+    this->Sprite.setPosition(this->Location);
 }
