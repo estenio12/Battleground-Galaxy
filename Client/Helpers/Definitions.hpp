@@ -58,6 +58,8 @@ namespace BONUS
 {
     static const char NONE      = '0';
     static const char MOVESPEED = '1';
+    static const char SHIELD    = '2';
+    static const char HPRECOVER = '3';
 }
 
 namespace FIRE

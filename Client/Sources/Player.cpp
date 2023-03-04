@@ -4,6 +4,7 @@ Player::Player(sf::Texture& Texture):Texture(Texture)
 {
     this->LoadSprite();
     this->LoadBullet();
+    this->LoadTimers();
 }
 
 Player::~Player(){}
@@ -13,6 +14,7 @@ void Player::Update()
     this->Location += this->Velocity;
     this->Sprite.setPosition(this->Location);
     this->UpdateBoundingBox();
+    this->BonusAction();
 
     // # Update Bullet
     for(auto bullet : BulletList)
@@ -27,6 +29,7 @@ void Player::Update()
 void Player::Render(sf::RenderWindow* Render)
 {
     Render->draw(this->Sprite);
+    this->BonusRender();
 
     // # Render Bullet
     for(auto bullet : BulletList)
@@ -77,7 +80,16 @@ void Player::TriggerFire(char State)
 
 void Player::TriggerBonus()
 {
-    
+    switch (this->Bonus)
+    {
+        case BONUS::MOVESPEED:
+            this->ApplyBonusMovespeed();
+        break;
+
+        case BONUS::SHIELD:
+            this->ApplyBonusMovespeed();
+        break;
+    }
 }
 
 void Player::CallReborn()
@@ -97,8 +109,79 @@ void Player::IncrementBulletIndex()
     }
 }
 
+void Player::ApplyBonusMovespeed()
+{
+    this->MOVESPEED += BONUS_MOVESPEED;
+    this->MovespeedActiveted = true;
+}
 
+void Player::ApplyBonusShield()
+{
+    this->ShieldActiveted = true;
+}
 
+void Player::ApplyBonusHPRecover()
+{
+    this->HPRecoverActiveted = true;
+}
 
+void Player::LoadTimers()
+{
+    MovespeedTimer = new Timer(SYSATTR::Bonus::MOVESPEED_DURATION);
+    ShieldTimer    = new Timer(SYSATTR::Bonus::SHIELD_DURATION);
+    HPRecoverTimer = new Timer(SYSATTR::Bonus::HPRECOVER_DURATION);
+}
+
+void Player::BonusAction()
+{
+    if(this->MovespeedActiveted)
+    {
+        if(this->MovespeedTimer->ExecuteTimer())
+        {
+            this->MovespeedActiveted = false;
+            this->MovespeedTimer->ResetTimer();
+            this->MOVESPEED -= BONUS_MOVESPEED;
+        }
+    }
+
+    if(this->ShieldActiveted)
+    {
+        if(this->ShieldTimer->ExecuteTimer())
+        {
+            this->ShieldActiveted = false;
+            this->ShieldTimer->ResetTimer();
+        }
+    }
+}
+
+void Player::BonusRender()
+{
+    if(this->ShieldActiveted)
+    {
+        this->Sprite.setColor(sf::Color::Green);
+    }
+
+    if(this->HPRecoverActiveted)
+    {
+        if(HPRecoverTimer->ExecuteTimer())
+        {
+            this->HPRecoverActiveted = false;
+        }
+    }
+}
+
+void Player::BonusHandler(char Bonus)
+{
+    switch(Bonus)
+    {
+        case BONUS::HPRECOVER:
+            this->ApplyBonusHPRecover();
+        break;
+
+        default:
+            this->Bonus = Bonus;
+        break;
+    }
+}
 
 

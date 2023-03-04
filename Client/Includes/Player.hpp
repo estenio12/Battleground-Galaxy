@@ -11,8 +11,10 @@
 #include <memory>
 
 #include "../Helpers/Definitions.hpp"
+#include "../Helpers/SystemAttributes.hpp"
 #include "../Includes/BaseCharacter.hpp"
 #include "../Includes/Bullet.hpp"
+#include "../Includes/Timer.hpp"
 
 class Player : public BaseCharacter
 {
@@ -38,6 +40,15 @@ class Player : public BaseCharacter
         const int MAX_BULLET = 30;
         const float SAFE_DISTANCE = 10.f;
         int Bullet_Index = 0;
+        const float BONUS_MOVESPEED = 100.f;
+
+    private:
+        bool MovespeedActiveted = false;
+        bool ShieldActiveted    = false;
+        bool HPRecoverActiveted = false;
+        Timer* MovespeedTimer;
+        Timer* ShieldTimer;
+        Timer* HPRecoverTimer;
 
     public:
         Player(sf::Texture& );
@@ -82,6 +93,15 @@ class Player : public BaseCharacter
         void NetDisconnect();
         void NetDeath();
         void NetReborn();
+
+    private:
+        void BonusHandler(char );
+        void ApplyBonusMovespeed();
+        void ApplyBonusHPRecover();
+        void ApplyBonusShield();
+        void LoadTimers();
+        void BonusAction();
+        void BonusRender();
 
     private:
         int ConvertToInt(std::string Value);

@@ -14,7 +14,7 @@
 class BaseCharacter : public Object2D
 {
     public:
-        const float MOVESPEED = 300.f;
+        float MOVESPEED = 300.f;
         const float DELTATIME = 0.016f;
         const float DIAGONAL_FACTOR = 1.5f;
         sf::Vector2f Velocity;

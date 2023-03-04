@@ -51,7 +51,7 @@ void Player::NetUpdateInfo(std::shared_ptr<std::string> Input)
 
 void Player::NetActiveBonus(std::shared_ptr<std::string> Input)
 {
-    this->Bonus = Input->at(2);
+    this->BonusHandler(Input->at(2));
 }
 
 void Player::NetActiveGun(std::shared_ptr<std::string> Input)

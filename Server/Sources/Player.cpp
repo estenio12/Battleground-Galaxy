@@ -85,3 +85,75 @@ void Player::IncrementBulletIndex()
     }
 }
 
+void Player::ApplyBonusMovespeed()
+{
+    this->MOVESPEED += BONUS_MOVESPEED;
+    this->MovespeedActiveted = true;
+}
+
+void Player::ApplyBonusShield()
+{
+    this->ShieldActiveted = true;
+}
+
+void Player::ApplyBonusHPRecover()
+{
+    this->HPRecoverActiveted = true;
+}
+
+void Player::LoadTimers()
+{
+    MovespeedTimer = new Timer(SYSATTR::Bonus::MOVESPEED_DURATION);
+    ShieldTimer    = new Timer(SYSATTR::Bonus::SHIELD_DURATION);
+    HPRecoverTimer = new Timer(SYSATTR::Bonus::HPRECOVER_DURATION);
+}
+
+void Player::BonusAction()
+{
+    if(this->MovespeedActiveted)
+    {
+        if(this->MovespeedTimer->ExecuteTimer())
+        {
+            this->MovespeedActiveted = false;
+            this->MovespeedTimer->ResetTimer();
+            this->MOVESPEED -= BONUS_MOVESPEED;
+        }
+    }
+
+    if(this->ShieldActiveted)
+    {
+        if(this->ShieldTimer->ExecuteTimer())
+        {
+            this->ShieldActiveted = false;
+            this->ShieldTimer->ResetTimer();
+        }
+    }
+}
+
+void Player::BonusRender()
+{
+    if(this->HPRecoverActiveted)
+    {
+        if(HPRecoverTimer->ExecuteTimer())
+        {
+            this->HPRecoverActiveted = false;
+        }
+    }
+}
+
+void Player::BonusHandler(char Bonus)
+{
+    switch(Bonus)
+    {
+        case BONUS::HPRECOVER:
+            this->ApplyBonusHPRecover();
+        break;
+
+        default:
+            this->Bonus = Bonus;
+        break;
+    }
+}
+
+
+

@@ -36,7 +36,7 @@
     5   1 - 4 0 - 1
 
     // # ACTIVE GUN
-    CMD PID   BONUS
+    CMD PID   GUN
     6   1 - 4 0 - 1
 
     // # KILL NOTIFIER
