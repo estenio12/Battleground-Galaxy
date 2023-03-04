@@ -12,11 +12,12 @@
 
 #include "../Includes/Object2D.hpp"
 #include "../Helpers/Definitions.hpp"
+#include "../Helpers/SystemAttributes.hpp"
 
 class BaseCharacter: public Object2D
 {
     public:
-        float MOVESPEED = 300.f;
+        float MOVESPEED = SYSATTR::DEFAULT::MOVESPEED;
         const float DELTATIME = 0.016f;
         const float DIAGONAL_FACTOR = 1.5f;
         sf::Vector2f Velocity;

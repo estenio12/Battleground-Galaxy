@@ -40,7 +40,8 @@ class Player : public BaseCharacter
         const int MAX_BULLET = 30;
         const float SAFE_DISTANCE = 10.f;
         int Bullet_Index = 0;
-        const float BONUS_MOVESPEED = 100.f;
+        const float BONUS_MOVESPEED  = SYSATTR::DEFAULT::MOVESPEED + 
+                                       SYSATTR::DEFAULT::BONUS_MOVESPEED;
 
     private:
         bool MovespeedActiveted = false;

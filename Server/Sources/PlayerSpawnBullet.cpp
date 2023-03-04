@@ -76,7 +76,7 @@ sf::Vector2f Player::CalculateSpawnBulletDown()
     sf::Vector2f loc;
 
     loc.x = Location.x + ((Size.x / 2) - BulletHalfSizeX());
-    loc.y = (Location.y + Size.y) + SAFE_DISTANCE;
+    loc.y = (Location.y + Size.y) + SAFE_DISTANCE_SPAWN;
     
     return loc;
 }
@@ -86,7 +86,7 @@ sf::Vector2f Player::CalculateSpawnBulletDownLeft()
     sf::Vector2f loc;
 
     loc.x = Location.x - BulletFullSizeX();
-    loc.y = (Location.y + Size.y) + SAFE_DISTANCE;
+    loc.y = (Location.y + Size.y) + SAFE_DISTANCE_SPAWN;
     
     return loc;
 }
@@ -96,7 +96,7 @@ sf::Vector2f Player::CalculateSpawnBulletDownRight()
     sf::Vector2f loc;
 
     loc.x = (Location.x + Size.x) + BulletFullSizeX();
-    loc.y = (Location.y + Size.y) + SAFE_DISTANCE;
+    loc.y = (Location.y + Size.y) + SAFE_DISTANCE_SPAWN;
     
     return loc;
 }

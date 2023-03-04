@@ -65,7 +65,16 @@ void Player::TriggerFire(char State)
 
 void Player::TriggerBonus()
 {
-    
+    switch (this->Bonus)
+    {
+        case BONUS::MOVESPEED:
+            this->ApplyBonusMovespeed();
+        break;
+
+        case BONUS::SHIELD:
+            this->ApplyBonusShield();
+        break;
+    }
 }
 
 void Player::CallReborn()
@@ -87,13 +96,15 @@ void Player::IncrementBulletIndex()
 
 void Player::ApplyBonusMovespeed()
 {
-    this->MOVESPEED += BONUS_MOVESPEED;
+    this->MOVESPEED = BONUS_MOVESPEED;
     this->MovespeedActiveted = true;
+    this->Bonus = BONUS::NONE;
 }
 
 void Player::ApplyBonusShield()
 {
     this->ShieldActiveted = true;
+    this->Bonus = BONUS::NONE;
 }
 
 void Player::ApplyBonusHPRecover()
@@ -103,9 +114,9 @@ void Player::ApplyBonusHPRecover()
 
 void Player::LoadTimers()
 {
-    MovespeedTimer = new Timer(SYSATTR::Bonus::MOVESPEED_DURATION);
-    ShieldTimer    = new Timer(SYSATTR::Bonus::SHIELD_DURATION);
-    HPRecoverTimer = new Timer(SYSATTR::Bonus::HPRECOVER_DURATION);
+    MovespeedTimer = new Timer(SYSATTR::BONUS::MOVESPEED_DURATION);
+    ShieldTimer    = new Timer(SYSATTR::BONUS::SHIELD_DURATION);
+    HPRecoverTimer = new Timer(SYSATTR::BONUS::HPRECOVER_DURATION);
 }
 
 void Player::BonusAction()
@@ -116,7 +127,7 @@ void Player::BonusAction()
         {
             this->MovespeedActiveted = false;
             this->MovespeedTimer->ResetTimer();
-            this->MOVESPEED -= BONUS_MOVESPEED;
+            this->MOVESPEED = SYSATTR::DEFAULT::MOVESPEED;
         }
     }
 

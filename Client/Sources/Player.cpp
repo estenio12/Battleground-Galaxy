@@ -87,7 +87,7 @@ void Player::TriggerBonus()
         break;
 
         case BONUS::SHIELD:
-            this->ApplyBonusMovespeed();
+            this->ApplyBonusShield();
         break;
     }
 }
@@ -111,13 +111,15 @@ void Player::IncrementBulletIndex()
 
 void Player::ApplyBonusMovespeed()
 {
-    this->MOVESPEED += BONUS_MOVESPEED;
+    this->MOVESPEED = BONUS_MOVESPEED;
     this->MovespeedActiveted = true;
+    this->Bonus = BONUS::NONE;
 }
 
 void Player::ApplyBonusShield()
 {
     this->ShieldActiveted = true;
+    this->Bonus = BONUS::NONE;
 }
 
 void Player::ApplyBonusHPRecover()
@@ -127,20 +129,22 @@ void Player::ApplyBonusHPRecover()
 
 void Player::LoadTimers()
 {
-    MovespeedTimer = new Timer(SYSATTR::Bonus::MOVESPEED_DURATION);
-    ShieldTimer    = new Timer(SYSATTR::Bonus::SHIELD_DURATION);
-    HPRecoverTimer = new Timer(SYSATTR::Bonus::HPRECOVER_DURATION);
+    MovespeedTimer = new Timer(SYSATTR::BONUS::MOVESPEED_DURATION);
+    ShieldTimer    = new Timer(SYSATTR::BONUS::SHIELD_DURATION);
+    HPRecoverTimer = new Timer(SYSATTR::BONUS::HPRECOVER_DURATION);
 }
 
 void Player::BonusAction()
 {
     if(this->MovespeedActiveted)
     {
+        std::cout << "Debug MV Antes: " << this->MOVESPEED << std::endl;
         if(this->MovespeedTimer->ExecuteTimer())
         {
             this->MovespeedActiveted = false;
             this->MovespeedTimer->ResetTimer();
-            this->MOVESPEED -= BONUS_MOVESPEED;
+            this->MOVESPEED = SYSATTR::DEFAULT::MOVESPEED;
+            std::cout << "Debug MV depois: " << this->MOVESPEED << std::endl;
         }
     }
 

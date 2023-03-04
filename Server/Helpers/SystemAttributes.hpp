@@ -8,10 +8,16 @@
 
 namespace SYSATTR
 {
-    namespace Bonus
+    namespace BONUS
     {
-        float SHIELD_DURATION    = 1.5f;
-        float MOVESPEED_DURATION = 0.5f;
-        float HPRECOVER_DURATION = 1.5f;
+        const float SHIELD_DURATION    = 1.5f;
+        const float MOVESPEED_DURATION = 0.5f;
+        const float HPRECOVER_DURATION = 1.5f;
+    }
+
+    namespace DEFAULT
+    {
+        const float MOVESPEED = 300.f;
+        const float BONUS_MOVESPEED = 100.f;
     }
 }

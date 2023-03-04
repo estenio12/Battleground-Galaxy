@@ -26,7 +26,7 @@ class Player : public BaseCharacter
         const float MAX_HP = 100; 
         float HP           = MAX_HP;
         char GUNHOLD       = GUN::BASIC;
-        char Bonus         = BONUS::NONE;
+        char Bonus         = BONUS::MOVESPEED;
         bool IsDead        = false;
         bool Disconnected  = false;
 
@@ -35,9 +35,10 @@ class Player : public BaseCharacter
 
     private:
         const int MAX_BULLET = 30;
-        const float SAFE_DISTANCE = 10.f;
+        const float SAFE_DISTANCE_SPAWN = 10.f;
         int Bullet_Index = 0;
-        const float BONUS_MOVESPEED = 100.f;
+        const float BONUS_MOVESPEED = SYSATTR::DEFAULT::MOVESPEED + 
+                                      SYSATTR::DEFAULT::BONUS_MOVESPEED;
 
     private:
         bool MovespeedActiveted = false;
