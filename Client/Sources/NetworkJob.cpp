@@ -1,4 +1,5 @@
 #include "../Includes/NetworkJob.hpp"
+#include "../Helpers/Tools.hpp"
 
 NetworkJob::NetworkJob(Map* map, int temp_port):map(map)
 {
@@ -43,7 +44,7 @@ void NetworkJob::ReceiveData()
     if(status == sf::Socket::Done)
     {
         std::string NewPacket = Buffer;
-        map->NetPacketProcess(NewPacket);
+        this->ReceivePacketHandler(NewPacket);
         // std::cout << "Debug: " << NewPacket << std::endl;
     }
 }
@@ -60,5 +61,19 @@ bool NetworkJob::CanShot()
 void NetworkJob::MakeShot()
 {
     map->Shot();
+}
+
+void NetworkJob::ReceivePacketHandler(std::string Packet)
+{
+    switch (Packet[0])
+    {
+        case NETCODE_CMD::UPDATEINFO:
+            map->UpdatePlayerInfo(Packet);
+        break;
+    
+        default:
+            map->NetPacketProcess(Packet);
+        break;
+    }
 }
 

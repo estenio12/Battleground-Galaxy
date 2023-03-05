@@ -11,8 +11,8 @@ void Bullet::Update()
 {
     if(this->Active)
     {
-        this->UpdateBoundingBox();
         this->BulletMoviment();
+        this->UpdateBoundingBox();
     }
 }
 
@@ -67,6 +67,9 @@ void Bullet::LoadQuantumBubble()
 
 void Bullet::BulletMoviment()
 {
+    Velocity.x = 0.f;
+    Velocity.y = 0.f;
+
     switch (Direction)
     {
         case INPUT::RIGHT:
@@ -83,6 +86,31 @@ void Bullet::BulletMoviment()
             Velocity.x = 0.f;
             Velocity.y = movespeed;
         break;
+
+        case INPUT::UP:
+            Velocity.x = 0.f;
+            Velocity.y = -movespeed;
+        break;
+
+        case INPUT::UPLEFT:
+            Velocity.x = -movespeed;
+            Velocity.y = -movespeed;
+        break;
+
+        case INPUT::UPRIGHT:
+            Velocity.x = movespeed;
+            Velocity.y = -movespeed;
+        break;
+
+        case INPUT::DOWNLEFT:
+            Velocity.x = -movespeed;
+            Velocity.y = movespeed;
+        break;
+
+        case INPUT::DOWNRIGHT:
+            Velocity.x = movespeed;
+            Velocity.y = movespeed;
+        break;
     }
 
     this->Location += Velocity;
@@ -91,4 +119,5 @@ void Bullet::BulletMoviment()
 void Bullet::SetDeactive()
 {
     this->Active = false;
+    this->Location = sf::Vector2f(10000.f, 10000.f);
 }

@@ -1,8 +1,11 @@
 #include "../Includes/NetworkJob.hpp"
+#include "../Includes/Timer.hpp"
 
 NetworkJob::NetworkJob(Map* map):map(map)
 {
     Socket.bind(SERVERPORT);
+
+    this->TimeUpdate = new Timer(TIME_TO_UPDATE);
 }
 
 NetworkJob::~NetworkJob(){}
@@ -46,4 +49,14 @@ bool NetworkJob::MatchRun()
 {
     return map->MatchRun;
 }
+
+void NetworkJob::UpdateAllPlayers()
+{
+    if(TimeUpdate->ExecuteTimer())
+    {
+        TimeUpdate->ResetTimer();
+        this->SendInputToAllPlayer(*map->GetPlayersData());
+    }
+}
+
 

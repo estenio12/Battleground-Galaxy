@@ -26,7 +26,7 @@ class Player : public BaseCharacter
         const float MAX_HP = 100; 
         float HP           = MAX_HP;
         char GUNHOLD       = GUN::BASIC;
-        char Bonus         = BONUS::MOVESPEED;
+        char Bonus         = BONUS::NONE;
         bool IsDead        = false;
         bool Disconnected  = false;
 
@@ -81,6 +81,8 @@ class Player : public BaseCharacter
         void TriggerFire(char );
         void TriggerBonus();
         void CallReborn();
+        std::shared_ptr<std::string> GetStrHP();
+        std::shared_ptr<std::string> GetStrLocation();
 
     public:
         void NetInputProcess(std::shared_ptr<std::string> Input);

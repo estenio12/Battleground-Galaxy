@@ -13,8 +13,8 @@ void Bullet::Update()
 {
     if(this->Active)
     {
-        this->UpdateBoundingBox();
         this->BulletMoviment();
+        this->UpdateBoundingBox();
     }
 }
 
@@ -33,7 +33,7 @@ void Bullet::SetActive(sf::Vector2f NewLocation,
     this->Direction = Direction;
     this->LoadBullet(Type);
     this->Location = NewLocation;
-    this->Active = true;
+    this->Active = true;      
 }
 
 void Bullet::LoadBullet(char Type)
@@ -132,8 +132,10 @@ void Bullet::BulletMoviment()
         break;
     }
 
+
     this->Location += Velocity;
     this->Sprite.setPosition(Location);
+
 }
 
 void Bullet::SetDeactive()

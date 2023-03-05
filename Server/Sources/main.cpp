@@ -61,5 +61,6 @@ void Listening(NetworkJob* Job)
     while(Job->MatchRun())
     {
         Job->ReceiveData();
+        Job->UpdateAllPlayers();
     }
 }

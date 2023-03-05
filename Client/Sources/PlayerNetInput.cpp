@@ -45,6 +45,7 @@ void Player::NetUpdateInfo(std::shared_ptr<std::string> Input)
     this->HP = ConvertToFloat(*Substring(*Input, 2, 5));
     
     auto loc = GetLocation(*Input);
+
     this->Location.x = loc[0];
     this->Location.y = loc[1];
 }
@@ -112,7 +113,7 @@ std::vector<float> Player::GetLocation(std::string Value)
     std::string Split[2] = {"", ""};
     int indice = 0;
 
-    std::string Temp = *Substring(Value, 6, Value.size());
+    std::string Temp = *Substring(Value, 5, Value.size());
     
     for(int i = 0; i < Temp.size(); i++)
     {

@@ -18,6 +18,7 @@ Player::~Player()
 
 void Player::Update()
 {
+    this->Location += Velocity;
     this->UpdateBoundingBox();
 
     // # Update Bullet
@@ -166,5 +167,25 @@ void Player::BonusHandler(char Bonus)
     }
 }
 
+std::shared_ptr<std::string> Player::GetStrHP()
+{
+    std::string strHP    = std::to_string((int)this->HP);
+    std::string strFinal = "";
 
+    for(int i = strHP.size(); i < 3; i++)
+    {
+        strFinal.push_back('0');
+    }
 
+    strFinal += strHP;
+
+    return std::make_shared<std::string>(strFinal);
+}
+
+std::shared_ptr<std::string> Player::GetStrLocation()
+{
+    std::string x = std::to_string(this->Location.x);
+    std::string y = std::to_string(this->Location.y);
+
+    return std::make_shared<std::string>(x + "|" + y);
+}

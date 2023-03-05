@@ -57,12 +57,15 @@ void Map::Update()
 
 void Map::LoadBlockCollision()
 {
-    BlockCollision* b1 = new BlockCollision(sf::Vector2f(0, 450),
+    BlockCollision* b1 = new BlockCollision(sf::Vector2f(0, 550),
                                             sf::Vector2f(900, 250));
+
     BlockCollision* b2 = new BlockCollision(sf::Vector2f(0, 50),
                                             sf::Vector2f(50, 900));
+
     BlockCollision* b3 = new BlockCollision(sf::Vector2f(850, 50),
                                             sf::Vector2f(50, 900));
+                                            
     BlockCollision* b4 = new BlockCollision(sf::Vector2f(0, 0),
                                             sf::Vector2f(1000, 50));
 
@@ -90,6 +93,22 @@ void Map::LoadNetList()
     {
         NetList.push_back(new NETPACKET::Packet(item->IP, item->PORT));
     }
+}
+
+std::shared_ptr<std::string> Map::GetPlayersData()
+{
+    std::string Packet;
+
+    for(auto player : PlayerList)
+    {
+        Packet.push_back('1');
+        Packet.push_back(player->PID);
+        Packet += *player->GetStrHP();
+        Packet += *player->GetStrLocation();
+        Packet.push_back(':');
+    }
+
+    return std::make_shared<std::string>(Packet);
 }
 
 

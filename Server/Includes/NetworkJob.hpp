@@ -27,10 +27,17 @@ class NetworkJob
 
     private:
         Map* map;
+        Timer* TimeUpdate;
+
+    private:
+        const float TIME_TO_UPDATE = 1.5f;
 
     public:
         NetworkJob(Map* );
         ~NetworkJob();
+
+    public:
+        void UpdateAllPlayers();
 
     public:
         void SendInputToAllPlayer(std::string );

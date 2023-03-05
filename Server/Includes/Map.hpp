@@ -36,6 +36,8 @@ class Map
         void Update();
         void NetPacketProcess(std::string );
         void LoadNetList();
+        std::shared_ptr<std::string> GetPlayersData();  
+        
 
     private:
         void LoadBlockCollision();

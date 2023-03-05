@@ -44,6 +44,14 @@ void Map::Update()
     for(auto block : CollisionList)
     {
         MyPlayer->CollisionReponse(block);
+
+        for(auto bullet : MyPlayer->BulletList)
+        {
+            if(bullet->IsOverlapping(block))
+            {
+                bullet->SetDeactive();
+            }
+        }
     }
 
     // # Update All player
@@ -178,6 +186,16 @@ void Map::CanShotHandler()
         {
             this->CanShot = true;
         }
+    }
+}
+
+void Map::UpdatePlayerInfo(std::string Packet)
+{
+    auto GetList = Tools::Split(Packet, ':');
+
+    for(auto item : GetList)
+    {
+        this->NetPacketProcess(item);
     }
 }
 

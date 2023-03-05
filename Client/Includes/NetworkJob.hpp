@@ -40,4 +40,7 @@ class NetworkJob
         void MakeShot();
         bool MatchRun();
         bool CanShot();
+
+    private:
+        void ReceivePacketHandler(std::string );
 };

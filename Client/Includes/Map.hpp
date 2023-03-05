@@ -14,6 +14,7 @@
 #include "../Includes/Block.hpp"
 #include "../Includes/ArgumentProcess.hpp"
 #include "../Includes/Timer.hpp"
+#include "../Helpers/Tools.hpp"
 
 class Map
 {
@@ -42,6 +43,7 @@ class Map
         void NetPacketProcess(std::string );
         char GetMyPID();
         void Shot();
+        void UpdatePlayerInfo(std::string );
 
     private:
         void LoadBlockCollision();

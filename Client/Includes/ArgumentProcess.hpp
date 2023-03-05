@@ -11,6 +11,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../Includes/Player.hpp"
+#include "../Helpers/Tools.hpp"
 
 class RetArgPro
 {
@@ -23,5 +24,4 @@ class ArgumentProcess
 {
     public:
         static RetArgPro* Process(std::string, sf::Texture );
-        static std::vector<std::string> Split(std::string, char );
 };

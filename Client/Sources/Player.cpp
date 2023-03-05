@@ -69,7 +69,7 @@ void Player::TriggerFire(char State)
         BulletList[Bullet_Index]->SetActive(CalculateSpawnBullet(),
                                             BULLET_DIRECTION,
                                             GUNHOLD);
-        this->IncrementBulletIndex();
+        this->IncrementBulletIndex();      
     }
 
     if(FIRE::BONUS == State)
