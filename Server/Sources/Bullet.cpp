@@ -49,6 +49,7 @@ void Bullet::LoadBasic()
     this->Size = sf::Vector2f(BULLET::BASIC_SIZE[0], 
                               BULLET::BASIC_SIZE[1]);
     this->movespeed = 10.f;
+    this->Damage = SYSATTR::DAMAGE::BASIC;
 }
 
 void Bullet::LoadLaser()
@@ -56,6 +57,7 @@ void Bullet::LoadLaser()
     this->Size = sf::Vector2f(BULLET::LASER_SIZE[0], 
                               BULLET::LASER_SIZE[1]);
     this->movespeed = 25.f;
+    this->Damage = SYSATTR::DAMAGE::LASER;
 }
 
 void Bullet::LoadQuantumBubble()
@@ -63,6 +65,7 @@ void Bullet::LoadQuantumBubble()
     this->Size = sf::Vector2f(BULLET::QUANTUMBUBBLE_SIZE[0], 
                               BULLET::QUANTUMBUBBLE_SIZE[1]);
     this->movespeed = 10.f;
+    this->Damage = SYSATTR::DAMAGE::QUANTUM_BUBBLE;
 }
 
 void Bullet::BulletMoviment()

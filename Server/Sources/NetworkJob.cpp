@@ -57,6 +57,19 @@ void NetworkJob::UpdateAllPlayers()
         TimeUpdate->ResetTimer();
         this->SendInputToAllPlayer(*map->GetPlayersData());
     }
+
+    this->NotifyPlayers();
 }
+
+void NetworkJob::NotifyPlayers()
+{
+    for(auto notification : map->NotificationList)
+    {
+        this->SendInputToAllPlayer(notification);
+    }
+
+    map->NotificationList.clear();
+}
+
 
 

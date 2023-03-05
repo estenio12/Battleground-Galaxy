@@ -3,6 +3,7 @@
 Player::Player(sf::Texture& Texture):Texture(Texture)
 {
     this->LoadSprite();
+    this->LoadHUD();
     this->LoadBullet();
     this->LoadTimers();
 }
@@ -11,10 +12,14 @@ Player::~Player(){}
 
 void Player::Update()
 {
-    this->Location += this->Velocity;
-    this->Sprite.setPosition(this->Location);
-    this->UpdateBoundingBox();
-    this->BonusAction();
+    if(!this->IsDead)
+    {
+        this->Location += this->Velocity;
+        this->Sprite.setPosition(this->Location);
+        this->UpdateBoundingBox();
+        this->BonusAction();
+        this->UpdateHUD();
+    }
 
     // # Update Bullet
     for(auto bullet : BulletList)
@@ -30,6 +35,7 @@ void Player::Render(sf::RenderWindow* Render)
 {
     Render->draw(this->Sprite);
     this->BonusRender();
+    this->RenderHUD(Render);
 
     // # Render Bullet
     for(auto bullet : BulletList)
@@ -51,6 +57,21 @@ void Player::LoadSprite()
     this->Sprite.setPosition(this->Location);
     this->CollisionType = CollisionChannel::BLOCK;
     this->UpdateBoundingBox();
+}
+
+void Player::LoadHUD()
+{
+    HPBar.setFillColor(sf::Color(124, 124, 124));
+    HPBar.setSize(sf::Vector2f(64.f, 12));
+    HPBar.setOutlineColor(sf::Color::Black);
+    HPBar.setOutlineThickness(1.f);
+
+    HPBarrier.setSize(sf::Vector2f(HPBarrierSize, 10));
+}
+
+void Player::SetHPColor(const sf::Color Color)
+{
+    this->HPBarrier.setFillColor(Color);
 }
 
 void Player::LoadBullet()
@@ -138,13 +159,11 @@ void Player::BonusAction()
 {
     if(this->MovespeedActiveted)
     {
-        std::cout << "Debug MV Antes: " << this->MOVESPEED << std::endl;
         if(this->MovespeedTimer->ExecuteTimer())
         {
             this->MovespeedActiveted = false;
             this->MovespeedTimer->ResetTimer();
             this->MOVESPEED = SYSATTR::DEFAULT::MOVESPEED;
-            std::cout << "Debug MV depois: " << this->MOVESPEED << std::endl;
         }
     }
 
@@ -186,6 +205,12 @@ void Player::BonusHandler(char Bonus)
             this->Bonus = Bonus;
         break;
     }
+}
+
+void Player::ApplyDeath()
+{
+    this->IsDead = true;
+    this->Bonus = BONUS::NONE;
 }
 
 

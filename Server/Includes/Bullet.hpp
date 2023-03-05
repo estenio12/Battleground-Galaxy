@@ -9,6 +9,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../Helpers/Definitions.hpp"
+#include "../Helpers/SystemAttributes.hpp"
 #include "../Includes/Object2D.hpp"
 
 class Bullet : public Object2D
@@ -20,6 +21,7 @@ class Bullet : public Object2D
 
     public:
         bool Active = false;
+        float Damage = SYSATTR::DAMAGE::BASIC;
 
     public:
         Bullet();

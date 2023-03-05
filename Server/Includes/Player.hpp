@@ -23,11 +23,12 @@ class Player : public BaseCharacter
         unsigned short PORT; 
 
     public:
-        const float MAX_HP = 100; 
+        const float MAX_HP = SYSATTR::DEFAULT::MAX_HP; 
         float HP           = MAX_HP;
         char GUNHOLD       = GUN::BASIC;
         char Bonus         = BONUS::NONE;
         bool IsDead        = false;
+        bool IsReborn      = false;
         bool Disconnected  = false;
 
     public:
@@ -47,6 +48,7 @@ class Player : public BaseCharacter
         Timer* MovespeedTimer;
         Timer* ShieldTimer;
         Timer* HPRecoverTimer;
+        Timer* RebornTimer;
 
     public:
         Player(char PID,
@@ -76,6 +78,7 @@ class Player : public BaseCharacter
 
     public:
         void Update() override;
+        void ApplyDamage(float );
         
     public:
         void TriggerFire(char );
@@ -99,6 +102,7 @@ class Player : public BaseCharacter
         void LoadTimers();
         void BonusAction();
         void BonusRender();
+        void DeathHandler();
 
     private:
         int ConvertToInt(std::string Value);

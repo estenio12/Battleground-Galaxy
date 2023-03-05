@@ -20,6 +20,8 @@ class Map
 {
     private:
         sf::Texture Texture;
+        sf::Color MyPlayerColor    = sf::Color(104, 219, 54);
+        sf::Color EnemyPlayerColor = sf::Color(232, 86, 76);;
         std::vector<Player*> PlayerList;
         Player* MyPlayer;
         Timer* ShotTimer;
@@ -44,9 +46,11 @@ class Map
         char GetMyPID();
         void Shot();
         void UpdatePlayerInfo(std::string );
+        bool MyPlayerIsLive();
 
     private:
         void LoadBlockCollision();
         void CanShotHandler();
+        void ApplyColorToPlayers();
 };
 

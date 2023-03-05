@@ -43,6 +43,10 @@
     CMD PIDKILLER PIDDEAD 
     7   1 - 4     1-4
 
+    // # Apply Damage
+    CMD PID    HP
+    8   1 - 4  000
+
 # Arguments
 
 MyPID : Nickname |

@@ -11,19 +11,22 @@ NetworkJob::~NetworkJob(){}
 
 void NetworkJob::SendInput(char Move, char Fire)
 {
-    // # Command ID
-    std::string InputString = "0";
-    // # Player PID
-    InputString.push_back(map->GetMyPID());
-    // # Player Move Input
-    InputString.push_back(Move);
-    // # Player Fire Input
-    InputString.push_back(Fire);
+    if(map->MyPlayerIsLive())
+    {
+        // # Command ID
+        std::string InputString = "0";
+        // # Player PID
+        InputString.push_back(map->GetMyPID());
+        // # Player Move Input
+        InputString.push_back(Move);
+        // # Player Fire Input
+        InputString.push_back(Fire);
 
-    // # Send packet to server
-    Socket.send(InputString.c_str(), 
-                InputString.size() + 1, 
-                IP_SERVER, SERVER_PORT);
+        // # Send packet to server
+        Socket.send(InputString.c_str(), 
+                    InputString.size() + 1, 
+                    IP_SERVER, SERVER_PORT);
+    }
 }
 
 void NetworkJob::SendDisconnect()

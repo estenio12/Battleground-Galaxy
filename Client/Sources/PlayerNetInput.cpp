@@ -31,6 +31,10 @@ void Player::NetInputProcess(std::shared_ptr<std::string> Input)
         case NETCODE_CMD::GUN:
             NetActiveGun(Input);
         break;
+
+        case NETCODE_CMD::DAMAGE:
+            NetDamage(Input);
+        break;
     }
 }
 
@@ -42,7 +46,7 @@ void Player::NetReplicante(std::shared_ptr<std::string> Input)
 
 void Player::NetUpdateInfo(std::shared_ptr<std::string> Input)
 {
-    this->HP = ConvertToFloat(*Substring(*Input, 2, 5));
+    this->ApplyDamage(ConvertToFloat(*Substring(*Input, 2, 5)));
     
     auto loc = GetLocation(*Input);
 
@@ -60,6 +64,11 @@ void Player::NetActiveGun(std::shared_ptr<std::string> Input)
     this->GUNHOLD = Input->at(2);
 }
 
+void Player::NetDamage(std::shared_ptr<std::string> Input)
+{
+    this->ApplyDamage(ConvertToFloat(*Substring(*Input, 2, 5)));
+}
+
 void Player::NetDisconnect()
 {
     this->Disconnected = true;
@@ -67,7 +76,7 @@ void Player::NetDisconnect()
 
 void Player::NetDeath()
 {
-    this->IsDead = true;
+    this->ApplyDeath();
 }
 
 void Player::NetReborn()

@@ -39,6 +39,9 @@ class NetworkJob
     public:
         void UpdateAllPlayers();
 
+    private:
+        void NotifyPlayers();
+
     public:
         void SendInputToAllPlayer(std::string );
         void SendInputSinglePlayer(std::string );

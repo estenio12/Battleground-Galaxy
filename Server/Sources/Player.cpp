@@ -9,6 +9,7 @@ Player::Player(char PID,
 {
     this->LoadPlayer();
     this->LoadBullet();
+    this->LoadTimers();
 }
 
 Player::~Player()
@@ -20,6 +21,8 @@ void Player::Update()
 {
     this->Location += Velocity;
     this->UpdateBoundingBox();
+    this->BonusAction();
+    this->DeathHandler();
 
     // # Update Bullet
     for(auto bullet : BulletList)
@@ -118,6 +121,7 @@ void Player::LoadTimers()
     MovespeedTimer = new Timer(SYSATTR::BONUS::MOVESPEED_DURATION);
     ShieldTimer    = new Timer(SYSATTR::BONUS::SHIELD_DURATION);
     HPRecoverTimer = new Timer(SYSATTR::BONUS::HPRECOVER_DURATION);
+    RebornTimer    = new Timer(SYSATTR::DEFAULT::DEATH_DURATION);
 }
 
 void Player::BonusAction()
@@ -189,3 +193,28 @@ std::shared_ptr<std::string> Player::GetStrLocation()
 
     return std::make_shared<std::string>(x + "|" + y);
 }
+
+void Player::ApplyDamage(float Damage)
+{
+    this->HP -= Damage;
+
+    if(HP <= 0)
+    {
+        this->HP = 0;
+        this->IsDead = true;
+    }
+}
+
+void Player::DeathHandler()
+{
+    if(this->IsDead)
+    {
+        if(RebornTimer->ExecuteTimer())
+        {
+            this->IsDead = false;
+            this->IsReborn = true;
+            this->RebornTimer->ResetTimer();
+        }
+    }
+}
+

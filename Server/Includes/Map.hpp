@@ -19,6 +19,7 @@ class Map
     public:
         std::vector<Player*> PlayerList;
         std::vector<NETPACKET::Packet*> NetList;
+        std::vector<std::string> NotificationList;
 
     private:
         std::vector<BlockCollision*> CollisionList;
@@ -37,9 +38,13 @@ class Map
         void NetPacketProcess(std::string );
         void LoadNetList();
         std::shared_ptr<std::string> GetPlayersData();  
-        
 
     private:
         void LoadBlockCollision();
+        void CheckDeath(Player*, Player* );
+        std::string BuildDeathInput(Player* );
+        std::string BuildKillNotification(Player*, Player* );
+        std::string BuildDamageInput(Player* );
+        void DeathHandler();
 };
 

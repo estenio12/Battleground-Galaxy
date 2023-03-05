@@ -37,14 +37,15 @@ namespace INPUT
 
 namespace NETCODE_CMD
 {
-    static const char REPLICATE    = '0';
-    static const char UPDATEINFO   = '1';
-    static const char DISCONNECTED = '2';
-    static const char DEAD         = '3';
-    static const char REBORN       = '4';
-    static const char BONUS        = '5';
-    static const char GUN          = '6';
-    static const char KILLNOTIFIER = '7';
+    static const char REPLICATE     = '0';
+    static const char UPDATEINFO    = '1';
+    static const char DEAD          = '2';
+    static const char DISCONNECTED  = '3';
+    static const char REBORN        = '4';
+    static const char BONUS         = '5';
+    static const char GUN           = '6';
+    static const char KILLNOTIFIER  = '7';
+    static const char DAMAGE        = '8';
 }
 
 namespace GUN

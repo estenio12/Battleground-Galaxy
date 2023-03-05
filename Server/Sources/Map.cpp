@@ -16,6 +16,8 @@ Map::~Map()
 
 void Map::Update()
 {
+    this->DeathHandler();
+
     // # Update All player
     for(auto player : PlayerList)
     {
@@ -45,9 +47,13 @@ void Map::Update()
             {
                 for(auto allplayers : PlayerList)
                 {
-                    if(bullet->IsOverlapping(allplayers))
+                    if(bullet->IsOverlapping(allplayers) &&
+                       !allplayers->IsDead)
                     {
                         bullet->SetDeactive();
+                        allplayers->ApplyDamage(bullet->Damage);
+
+                        this->CheckDeath(allplayers, player);
                     }
                 }
             }
@@ -111,4 +117,70 @@ std::shared_ptr<std::string> Map::GetPlayersData()
     return std::make_shared<std::string>(Packet);
 }
 
+void Map::CheckDeath(Player* victim, Player* Moderer)
+{
+    if(victim->IsDead)
+    {
+        // # Player Dead notification 
+        NotificationList.push_back
+        (
+            BuildDeathInput(victim)
+        );
+        
+        // # Kill notification 
+        NotificationList.push_back
+        (
+            BuildKillNotification(victim, Moderer)
+        );
+    }
+    else
+    {
+        NotificationList.push_back
+        (
+            BuildDamageInput(victim)
+        );
+    }
+}
+
+std::string Map::BuildDeathInput(Player* victim)
+{
+    std::string Packet = "2";
+    Packet.push_back(victim->PID);
+
+    return Packet;
+}
+
+std::string Map::BuildKillNotification(Player* victim, Player* Moderer)
+{
+    std::string Packet = "7";
+    Packet.push_back(victim->PID);
+    Packet.push_back(Moderer->PID);
+
+    return Packet;
+}
+
+std::string Map::BuildDamageInput(Player* victim)
+{
+    std::string Packet = "8";
+    Packet.push_back(victim->PID);
+    Packet += *victim->GetStrHP();
+
+    return Packet;
+}
+
+void Map::DeathHandler()
+{
+    for(auto player : PlayerList)
+    {
+        if(player->IsReborn)
+        {
+            std::string Packet = "4";
+            Packet.push_back(player->PID);
+            this->NotificationList.push_back(Packet);
+
+            player->IsReborn = false;
+            player->CallReborn();
+        }
+    }
+}
 

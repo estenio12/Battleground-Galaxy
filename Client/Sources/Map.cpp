@@ -5,6 +5,7 @@ Map::Map(RetArgPro* Argument,
 {
     this->MyPlayer   = Argument->MyPlayer;
     this->PlayerList = Argument->PlayerList;
+    this->ApplyColorToPlayers();
     
     LoadBlockCollision();
 
@@ -145,6 +146,11 @@ char Map::GetMyPID()
     return this->MyPlayer->PID;
 }
 
+bool Map::MyPlayerIsLive()
+{
+    return this->MyPlayer->IsDead == false;
+}
+
 void Map::NetPacketProcess(std::string NetPacket)
 {
     if(NetPacket.at(0) == NETCODE_CMD::KILLNOTIFIER)
@@ -199,3 +205,12 @@ void Map::UpdatePlayerInfo(std::string Packet)
     }
 }
 
+void Map::ApplyColorToPlayers()
+{
+    this->MyPlayer->SetHPColor(MyPlayerColor);
+
+    for(auto player : PlayerList)
+    {
+        player->SetHPColor(EnemyPlayerColor);
+    }
+}

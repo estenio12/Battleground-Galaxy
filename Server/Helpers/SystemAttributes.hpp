@@ -11,13 +11,22 @@ namespace SYSATTR
     namespace BONUS
     {
         const float SHIELD_DURATION    = 1.5f;
-        const float MOVESPEED_DURATION = 0.5f;
+        const float MOVESPEED_DURATION = 2.0f;
         const float HPRECOVER_DURATION = 1.5f;
     }
 
     namespace DEFAULT
     {
-        const float MOVESPEED = 300.f;
-        const float BONUS_MOVESPEED = 100.f;
+        const float MOVESPEED       = 300.f;
+        const float BONUS_MOVESPEED = 300.f;
+        const float DEATH_DURATION  = 10.f;
+        const float MAX_HP          = 100.f;
+    }
+
+    namespace DAMAGE
+    {
+        const float BASIC          = 5.f;
+        const float LASER          = 15.f;
+        const float QUANTUM_BUBBLE = 35.f;
     }
 }

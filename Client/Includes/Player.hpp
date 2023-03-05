@@ -16,10 +16,14 @@
 #include "../Includes/Bullet.hpp"
 #include "../Includes/Timer.hpp"
 
+#define pout(x) std::cout << x << std::endl
+
 class Player : public BaseCharacter
 {
     private:
         sf::Texture Texture;
+        sf::RectangleShape HPBar;
+        sf::RectangleShape HPBarrier;
 
     public:
         char PID;
@@ -27,9 +31,9 @@ class Player : public BaseCharacter
 
     public:
         const float MAX_HP = 100; 
-        float HP           = MAX_HP;
+        float HP           = 100;
         char GUNHOLD       = GUN::BASIC;
-        char Bonus         = BONUS::NONE;
+        char Bonus         = BONUS::MOVESPEED;
         bool IsDead        = false;
         bool Disconnected  = false;
 
@@ -42,6 +46,7 @@ class Player : public BaseCharacter
         int Bullet_Index = 0;
         const float BONUS_MOVESPEED  = SYSATTR::DEFAULT::MOVESPEED + 
                                        SYSATTR::DEFAULT::BONUS_MOVESPEED;
+        const float HPBarrierSize = 63.f;
 
     private:
         bool MovespeedActiveted = false;
@@ -57,6 +62,7 @@ class Player : public BaseCharacter
 
     private:
         void LoadSprite();
+        void LoadHUD();
         void JumpAndGravity();
         void LoadBullet();
         void IncrementBulletIndex();
@@ -82,6 +88,8 @@ class Player : public BaseCharacter
         void TriggerFire(char );
         void TriggerBonus();
         void CallReborn();
+        void SetHPColor(const sf::Color);
+        void ApplyDeath();
 
     public:
         void NetInputProcess(std::shared_ptr<std::string> Input);
@@ -91,6 +99,7 @@ class Player : public BaseCharacter
         void NetUpdateInfo(std::shared_ptr<std::string> );
         void NetActiveBonus(std::shared_ptr<std::string> );
         void NetActiveGun(std::shared_ptr<std::string> );
+        void NetDamage(std::shared_ptr<std::string> );
         void NetDisconnect();
         void NetDeath();
         void NetReborn();
@@ -103,6 +112,11 @@ class Player : public BaseCharacter
         void LoadTimers();
         void BonusAction();
         void BonusRender();
+
+    private:
+        void UpdateHUD();
+        void RenderHUD(sf::RenderWindow* );
+        void ApplyDamage(float );
 
     private:
         int ConvertToInt(std::string Value);
